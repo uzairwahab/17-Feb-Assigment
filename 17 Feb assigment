@@ -1,0 +1,170 @@
+Q1. What is MongoDB? Explain non-relational databases in short. In which scenarios it is preferred to use
+MongoDB over SQL databases?
+ans. 
+MongoDB is a popular document-oriented, NoSQL database that stores data in a flexible, JSON-like format known as BSON (Binary JSON). It is an open-source,
+cross-platform database that is designed for high performance, scalability, and flexibility.
+
+Non-relational databases, or NoSQL databases, are databases that do not use a fixed schema to store data. Instead, they use flexible data models that allow developers
+to store and retrieve data in a variety of ways. NoSQL databases can be document-oriented, key-value, column-oriented, or graph databases.
+
+In document-oriented NoSQL databases like MongoDB, data is stored in documents that can contain nested data structures, arrays, and other complex data types. This 
+flexibility allows developers to store data in a way that is more natural and intuitive for their applications. Additionally, document-oriented databases like MongoDB
+can scale horizontally, which means that they can handle large amounts of data and high levels of traffic.
+
+There are several scenarios where MongoDB is preferred over SQL databases:
+
+1. High scalability: MongoDB is designed to be highly scalable, and it can handle large amounts of data and high levels of traffic. It can also be easily distributed 
+across multiple servers, which makes it a good choice for applications that need to scale quickly.
+
+2. Complex data structures: MongoDB's flexible document model allows developers to store and query complex data structures, including nested data, arrays, and other
+complex data types. This makes it a good choice for applications that need to store and query data in non-tabular formats.
+
+3. Rapid development: MongoDB's flexible schema makes it easy to make changes to the data model as the application evolves. This can be particularly helpful in rapid 
+development environments where requirements may change frequently.
+
+4. Low-latency queries: MongoDB's flexible document model allows developers to create indexes on any field, which can make queries faster and more efficient.
+
+
+
+Q2. State and Explain the features of MongoDB.
+ANS.
+1. Ad-hoc queries for optimized, real-time analytics
+2. Indexing appropriately for better query executions
+3. Replication for better data availability and stability
+4. Sharding
+5. Load balancing
+
+Q3. Write a code to connect MongoDB to Python. Also, create a database and a collection in MongoDB.
+ANS. 
+import pymongo
+client = pymongo.MongoClient("mongodb+srv://uzairwahab:uzairwahab@cluster0.2yl6lpp.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
+
+db = client['pwskills']
+
+data = {'name' : 'sudh',
+        'class':'data-science',
+        'time':'flexi'}
+        
+coll_pwskills = db['my_record']
+
+Q4. Using the database and the collection created in question number 3, write a code to insert one record,
+and insert many records. Use the find() and find_one() methods to print the inserted record.
+ANS.
+import pymongo
+client = pymongo.MongoClient("mongodb+srv://uzairwahab:uzairwahab@cluster0.2yl6lpp.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
+
+db = client['pwskills']
+
+data = {'name' : 'sudh',
+        'class':'data-science',
+        'time':'flexi'}
+        
+coll_pwskills = db['my_record']
+
+data1 = {'mail-id' : 'sudh@gamil.com',
+         'phone-num' :986677654,
+         'addr' : 'banglore'
+
+}
+coll_pwskills.insert_one(data1)
+
+list_of_records = [
+    {'companyName': 'iNeuron',
+     'product': 'Affordable AI',
+     'courseOffered': 'Machine Learning with Deployment'},
+    
+    {'companyName': 'iNeuron',
+     'product': 'Affordable AI',
+     'courseOffered': 'Deep Learning for NLP and Computer vision'},
+    
+    {'companyName': 'iNeuron',
+     'product': 'Master Program',
+     'courseOffered': 'Data Science Masters Program'}
+]
+coll_pwskills.insert_many(list_of_records)
+
+FIND --
+coll_pwskills.find_one()
+
+{'_id': ObjectId('63f06af45bf83d0c6f1d73f0'),
+ 'name': 'sudh',
+ 'class': 'data-science',
+ 'time': 'flexi'}
+ 
+ 
+
+
+Q5. Explain how you can use the find() method to query the MongoDB database. Write a simple code to
+demonstrate this.
+ANS. The find() method is used to retrieve documents from a MongoDB collection. It takes a query object as a parameter and returns a cursor that points to the documents that match the query.
+
+Here's an example of how to use the find() method to query a MongoDB database using the PyMongo driver for Python:
+
+import pymongo
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["mydatabase"]
+collection = db["mycollection"]
+
+query = { "name": "John" }
+results = collection.find(query)
+
+for result in results:
+    print(result)
+
+
+
+
+Q6. Explain the sort() method. Give an example to demonstrate sorting in MongoDB.
+
+ans. The sort() method in MongoDB is used to sort the documents in a collection based on a specified field. This method takes one or more sorting criteria as
+input and returns a cursor pointing to the sorted documents.
+
+The sort() method can be used to sort documents in ascending or descending order based on the values of one or more fields. It can also be used to sort by natural
+order, which is the order in which documents are stored in the database.
+
+import pymongo
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["mydatabase"]
+collection = db["mycollection"]
+
+results = collection.find().sort("name", pymongo.ASCENDING)
+
+for result in results:
+    print(result)
+
+results = collection.find().sort([("name", pymongo.DESCENDING), ("age", pymongo.DESCENDING)])
+
+for result in results:
+    print(result)
+
+
+
+Q7. Explain why delete_one(), delete_many(), and drop() is used.
+ANS.
+#THIS IS DELETE ONE
+coll_pwskills.delete_one({ 'name': 'sudh'})
+
+#this is deleteMany
+coll_pwskills.delete_many({'companyName' : 'pwskills'})
+for i in coll_pwskills.find():
+    print(i)
+   
+dro()--
+The drop() method in MongoDB is used to delete a collection or a database. This method permanently removes all the documents and indexes in the specified 
+collection or database, and the operation cannot be undone.
+
+There are a few scenarios where you might want to use the drop() method:
+
+1.Delete a collection: If you no longer need a particular collection in your database, you can use the drop() method to delete it. This can be useful if you want to 
+free up space or if the collection is no longer relevant to your application.
+
+2.Start fresh: Sometimes you might want to start with a clean slate and delete all the documents in a collection. The drop() method can be used to quickly delete
+all the documents in a collection and start fresh.
+
+3.Security: In some cases, you may need to permanently delete sensitive data to ensure it cannot be accessed by unauthorized parties. The drop() method can be used
+to permanently delete a collection or database and the data within it.
+
+
+
